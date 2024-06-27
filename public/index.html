@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Function to fetch and update view count
+        async function updateViewCount() {
+            try {
+                const response = await fetch('/view-count');
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('view-count').innerText = data.viewCount;
+                } else {
+                    console.error('Failed to update view count');
+                }
+            } catch (error) {
+                console.error('Error fetching view count:', error);
+            }
+        }
+
+        // Call updateViewCount when the page loads
+        window.addEventListener('load', updateViewCount);
+    </script>
+
+</head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Kishore Kumar, Computer Science Engineer Portfolio" />
+    <meta name="description" content="Welcome to Kishore Kumar Portfolio, Computer Science Engineer" />
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link id='favicon' rel="shortcut icon" href="./assets/images/me1-round.png" type="image/x-png">
+    <title>Kishore Kumar Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  
+    <header class="header">
+        <a href="#" class="logo"><span>Kishore</span>Kumar</a>
+        <i class="fas fa-bars" id="menu-icon"></i>
+        <nav class="navbar" id="navbar">
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Skills</a>
+            <a href="#certificates">Projects</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Toggle the menu when clicking the hamburger icon
+            $('#menu-icon').click(function () {
+                $(this).toggleClass('fa-times'); // Toggle between hamburger and close icon
+                $('#navbar').toggleClass('nav-toggle');
+                $('body').toggleClass('no-scroll'); // Toggle body scrolling
+            });
+
+            // Close the menu when a navigation link is clicked
+            $('#navbar a').click(function () {
+                $('#menu-icon').removeClass('fa-times');
+                $('#navbar').removeClass('nav-toggle');
+                $('body').removeClass('no-scroll'); // Allow body scrolling
+            });
+
+            // Close the menu when clicking outside
+            $(document).click(function(event) {
+                if (!$(event.target).closest('.header').length) {
+                    $('#menu-icon').removeClass('fa-times');
+                    $('#navbar').removeClass('nav-toggle');
+                    $('body').removeClass('no-scroll'); // Allow body scrolling
+                }
+            });
+        });
+    </script>
+
+    <style>
+         #navbar {
+            display: none;
+        }
+        /* Show the navbar and prevent scrolling on body when nav-toggle class is added */
+        #navbar.nav-toggle {
+            display: block;
+        }
+        /* Prevent body scrolling when nav-toggle class is added */
+        body.no-scroll {
+            overflow: hidden;
+        }
+        /* Desktop view styles */
+        @media (min-width: 769px) {
+            #menu-icon {
+                display: none; /* Hide hamburger icon in desktop view */
+            }
+            #navbar {
+                display: flex; /* Show navbar in desktop view */
+                justify-content: center; /* Center align navigation links */
+                align-items: center; /* Center vertically */
+            }
+            .navbar a {
+                margin: 0 15px; /* Add space between navigation links */
+                text-decoration: none;
+                color:white; /* Change navigation links color */
+            }
+            .navbar a.active {
+                font-weight: bold; /* Highlight active link */
+            }
+        }
+    </style>
+
+</body>
+</html>
+
+
+    </header>
+    
+       
+    
+   
+    <section class="home" id="home">
+        <!-- Your home section content -->
+        <div class="home-content">
+            <p id="9">Views: <span id="view-count"></span></p>
+            <h3>Hello, It's Me</h3>
+            <h1>Kishore Kumar J</h1>
+            <h3>
+                And I'm a
+                <span> CSE STUDENT</span>
+            </h3>
+            <p>I am an enthusiastic and motivated individual with a strong passion for software development. Although I am early in my career journey, I am dedicated to honing my skills and gaining hands-on experience in the field. </p>
+        
+            <div class="social-media">
+                <ul>
+                <a href="https://www.facebook.com/login.php/">
+                    <i class='bx bxl-facebook'></i>
+                </a>
+        
+                <a href="https://twitter.com/login">
+                    <i class='bx bxl-twitter'></i>
+                </a>
+                <a href="https://www.linkedin.com/">
+                    <i class='bx bxl-linkedin'></i>
+                </a>
+                <a href="https://www.instagram.com/?hl=en">
+                    <i class='bx bxl-instagram-alt'></i>
+                </a>
+                </ul>
+            </div>
+            <a href="https://www.youtube.com/" class="btn">Subscribe</a>
+        </div>
+        <div class="home-image">
+            <img src="mern-stack2.png" alt="">
+        </div>
+    </section>
+   
+    <section class="about" id="about">
+        <!-- Your about section content -->
+        <div class="about-img">
+            <h3>Always Be Ready To Survive Alone,People Will Change Today You're Important To Them,Tomorrow You're Noting To Them.</h3>
+        </div>
+
+        <div class="about-content">
+            <h2 class="heading">About<span>Me</span></h2>
+            <h3>Full Stack Developer</h3>
+            <p>I'm a relentless full-stack architect, fueled by passion and ambition. Every setback is a setup for a comeback, and every challenge is an opportunity for growth. I am the architect of my destiny, and my journey is painted with the colors of possibility.</p>
+            <a href="#" class="btn">Read More</a>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <!-- Your services section content -->
+        <h2 class="heading">My <span>Skills</span></h2>
+
+        <div class="services-container">
+            <div class="services-box">
+                <i class='bx bx-code-alt'></i>
+                <h3>Web Development</h3>
+                <p>I'm a passionate web developer with expertise in both front-end and back-end technologies. I specialize in creating clean, user-friendly websites that engage and delight users. Eager to contribute my skills and creativity to innovative web projects.</p>
+                <a href="#" class="btn">Read More</a>
+            </div>
+
+            <div class="services-box">
+                <i class='bx bxl-c-plus-plus'></i>
+                <h3>Programming Languages</h3>
+                <p>I'm a dedicated software developer with a strong command of programming languages like C, C++, and Java. With a passion for problem-solving and a detail-oriented approach, I excel in building efficient and reliable software solutions. Eager to leverage my expertise to tackle new challenges and contribute to innovative projects.</p>
+                <a href="https://onlinegdb.com/HWU2dnW0x" class="btn">Read More</a>
+            </div>
+
+            <div class="services-box">
+                <i class='bx bx-server'></i>
+                <h3>Database Management</h3>
+                <p>I'm a database management specialist skilled in MongoDB. With a focus on data integrity and efficiency, I excel in designing and optimizing database architectures to drive business success.</p>
+                <a href="#" class="btn">Read More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="certificates" id="certificates">
+        <h2 class="heading">Projects</h2>
+        <div class="certificate-container">
+            <div class="certificate">
+                <h3>Simple Login Page With Backened Hosting</h3>
+                <div class="details" id="details1">
+                    <a href="https://nec.edu.in/" class="btn">Click for more details</a>
+                </div>
+               
+            </div>
+            <div class="certificate">
+                <h3>Simple OX Game Development In C/C++</h3>
+                <div class="details" id="details1">
+                    <a href="https://onlinegdb.com/HC_zBj2qP" class="btn">Click for more details</a>
+                </div>
+               
+            </div>
+            <div class="certificate">
+                <h3>Semester C.G.P.A And G.P.A Calculator</h3>
+                <div class="details" id="details1">
+                    <a href="https://onlinegdb.com/HWU2dnW0x" class="btn">Click for more details</a>
+                </div>
+            
+            </div>
+        </div>
+    </section>
+    
+    <section class="education" id="education">
+        <h2 class="heading">Education</h2>
+        <div class="education-container">
+            <div class="education-item" onclick="toggleDetails('details1')">
+                <h3><span>N</span>ational <span>E</span>ngineering <span>C</span>ollege</h3>
+                <p>Degree: Bachelor of Science in Computer Science</p>
+                <p>Duration: September 2022 - June 2026</p>
+                <p>Percentage: 8.67 <span>C.G.P.A</span></p>
+                <div class="details" id="details1">
+                    <a href="https://nec.edu.in/" class="btn">Click for more details</a>
+                </div>
+            </div>
+            <div class="education-item" onclick="toggleDetails('details2')">
+                <h3><span>K.C.A.D</span> Chidambaram Matric</h3>
+                <p>HSC</p>
+                <p>Duration: March 2016 - June 2021</p>
+                <p>Percentage: 90%</p>
+                <div class="details" id="details2">
+                    <a href="https://stackschools.com/schools/33261110119/kcad-chidambaram-gnanagiri-matriculation-higher-secondary-s%E2%80%A6" class="btn">Click for more details</a>
+                   
+            </div>
+        </div>
+    </section>
+  
+  
+    <section class="contact" id="contact">
+        <!-- Your contact section content -->
+        <h2 class="heading">Contact <span>Me</span></h2>
+
+        <form action="http://localhost:3000/contact" method="POST">
+            <div class="input-box">
+                <input type="text" placeholder="Full Name" name="fullName">
+                <input type="email" placeholder="Email Address" name="email">
+            </div>
+            <div class="input-box">
+                <input type="tel" placeholder="Phone Number" name="phoneNumber">
+                <input type="text" placeholder="Email Subject" name="emailSubject">
+            </div>
+            <textarea name="message" cols="30" rows="10" placeholder="Your Message"></textarea>
+            <input type="submit" value="Send Message" class="btn">
+        </form>
+    </section>
+
+    <section class="footer">
+
+        <div class="box-container">
+      
+            <div class="box">
+                <h3>Kishore Kumar J Portfolio</h3>
+                <p>Thank you for visiting my personal portfolio website. Connect with me over social media. <br/> <br/></p>
+            </div>
+      
+            <div class="box">
+                <h3>Quick Links</h3>
+
+                <a href="#home"> Home</a>
+                <a href="#about"> About</a>
+                <a href="#services">Skills</a>
+                <a href="#certificates"> Projects</a>
+                <a href="#education">Education</a>
+                <a href="#contact">Contact</a>
+            </div>
+      
+            <div class="box">
+                <h3>Contact Info</h3>
+                <ul>
+                <li> +91 8754278069</li>
+                <li> mersalkishore79@gmail.com</li>
+                <li> Sattur,Virudhunagar, TamilNadu - 626203 </li>
+                <div class="share">
+                    <a href="https://www.linkedin.com/in/kesavansk7" class="fab fa-linkedin" aria-label="LinkedIn" target="_blank"></a>
+                    <a href="https://github.com/KesavanSK7" class="fab fa-github" aria-label="GitHub" target="_blank"></a>
+                    <a href="mailto:kesavancse2003@gmail.com" class="fas fa-envelope" aria-label="Mail" target="_blank"></a>
+                </div>
+                </ul>
+            </div>
+        </div>
+        
+    </section>
+    <section class="footer">
+              <h1 class="credit">
+                Designed with <i class="fa fa-heart pulse"></i>  by 
+                <a href="https://www.linkedin.com/in/jigar-sable"> Kishore Kumar J</a>
+            
+              </h1>
+             
+            </section>    
+        
+     
+
+        <section class="footer" id="k">
+        <div class="footer-iconTop">
+            <a href="#home">
+                <i class='bx bx-up-arrow-alt'></i>
+            </a>
+             </div>
+            </h1>
+        </section>
+      <script>
+        // Store the original title
+        var originalTitle = document.title;
+      
+        document.addEventListener("visibilitychange", function() {
+          if (document.visibilityState === 'hidden') {
+            // Change the title when the page is hidden
+            document.title = "Come Back To Portfolio";
+          } else if (document.visibilityState === 'visible') {
+            // Restore the original title when the page is visible again
+            document.title = originalTitle;
+          }
+        });
+      </script>
+      <style>
+        #returnMessage {
+          display: none;
+          position: fixed;
+          font-size: 1.5rem;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: #f8d7da;
+          color:black;
+          padding: 15px;
+          border: 10px solid #f5c6cb;
+          border-radius: 15px;
+          z-index: 100;
+        }
+    #returnMessage .close {
+    cursor: pointer;
+    float: right;
+    font-size: 20px;
+    margin-left: 10px;
+  }
+      </style>
+      
+      <div id="returnMessage">
+        Come Back To Portfolio
+        <span class="close" onclick="closeMessage()">&times;</span>
+      </div>
+      
+      <script>
+        function closeMessage() {
+          var messageDiv = document.getElementById('returnMessage');
+          messageDiv.style.display = 'none';
+        }
+      
+        document.addEventListener("visibilitychange", function() {
+          var messageDiv = document.getElementById('returnMessage');
+          if (document.visibilityState === 'hidden') {
+            messageDiv.style.display = 'none';
+          } else if (document.visibilityState === 'visible') {
+            messageDiv.style.display = 'block';
+            setTimeout(function() {
+              messageDiv.style.display = 'none';
+            }, 39000); // Hide the message after 3 seconds
+          }
+        });
+      </script>
+      
+    <script src="script.js"></script>
+</body>
+</html>
