@@ -23,21 +23,17 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Endpoint to handle contact form submission (POST method)
 app.post('/contact', async (req, res) => {
-    // Log the incoming request body
-    console.log('Incoming request body:', req.body);
+ 
 
     const { fullName, email, phoneNumber, emailSubject, message } = req.body;
 
-    // Log the parsed fields
-    console.log('Parsed fields:', { fullName, email, phoneNumber, emailSubject, message });
-
+    
     try {
         // Insert contact form data into 'posts1' collection
         const newPost = new Post({ fullName, email, phoneNumber, emailSubject, message });
         const result = await newPost.save();
 
-        // Log the result of the insertion
-        console.log('Insertion result:', result);
+ 
 
         // Check if the insert was successful
         if (result) {
