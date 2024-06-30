@@ -1,91 +1,99 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-const path = require('path');
-const Post = require('./models/Post'); // Import Post model
-const View = require('./models/VIew'); // Import View model
+const { MongoClient } = require('mongodb');
+const dotenv = require('dotenv');
+
+dotenv.config(); // Load environment variables from .env file
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// MongoDB Atlas connection URI
-const uri = 'mongodb+srv://mersal:Kishorekumar@cluster0.ogdni4m.mongodb.net/mersal?retryWrites=true&w=majority';
+app.use(bodyParser.json()); // Middleware to parse JSON bodies
+app.use(bodyParser.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 
-// Connect to MongoDB Atlas
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
+// MongoDB Atlas connection string
+const uri = 'mongodb+srv://mersal:Kishorekumar@cluster0.ogdni4m.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+
+let db;
+
+// Connect to the MongoDB database
+async function connectToDatabase() {
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
     console.log('Connected to MongoDB Atlas');
-  })
-  .catch(error => {
-    console.error('Error connecting to MongoDB Atlas:', error.message);
-    process.exit(1);
-  });
+    db = client.db('mersal'); // Specify the database name here
+  } catch (error) {
+    console.error('Error connecting to MongoDB Atlas:', error);
+    process.exit(1); // Exit the application if connection fails
+  }
+}
 
-// Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Express session middleware
-app.use(session({
-  secret: 'your-secret-key', // Change this to a secure secret
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } // Set secure to true if using HTTPS
-}));
+// Call the function to connect to the database
+connectToDatabase();
 
 // Endpoint to handle contact form submission (POST method)
 app.post('/contact', async (req, res) => {
+  // Log the incoming request body
+  console.log('Incoming request body:', req.body);
+
   const { fullName, email, phoneNumber, emailSubject, message } = req.body;
 
+  
   try {
-    // Create a new post instance
-    const newPost = new Post({
+    // Insert contact form data into 'posts' collection
+    const result = await db.collection('posts1').insertOne({
       fullName,
       email,
       phoneNumber,
       emailSubject,
-      message
+      message,
+      timestamp: new Date() // Add a timestamp for when the message was sent
     });
 
-    // Save the new post instance to MongoDB
-    await newPost.save();
-
-    
-    // Send a success response
-    res.status(201).json({ message: 'Message sent successfully' });
+  
+    // Check if the insert was successful
+    if (result.acknowledged) {
+      // Send a success response
+      res.status(201).send('Message sent successfully');
+    } else {
+      // Log and send an error response if the insert was not successful
+      console.error('Error: Insert not acknowledged:', result);
+      res.status(500).send('Failed to send message');
+    }
   } catch (error) {
     console.error('Error handling contact form submission:', error);
-
-    // Send an error response
-    res.status(500).json({ message: 'Failed to send message' });
+    res.status(500).send('Failed to send message');
   }
 });
 
 // Endpoint to handle view count increment
 app.get('/view-count', async (req, res) => {
   try {
-    // Check if session has already marked this visit
-    if (!req.session.visited) {
-      req.session.visited = true;
-
-      // Increment view count in the database
-      let viewDoc = await View.findOne();
-      if (!viewDoc) {
-        viewDoc = new View();
-      }
-      viewDoc.viewCount += 1;
-      await viewDoc.save();
+    // Increment view count in the database
+    let viewDoc = await db.collection('views').findOne();
+    if (!viewDoc) {
+      viewDoc = { viewCount: 0 };
     }
+    viewDoc.viewCount += 1;
+    await db.collection('views').updateOne({}, { $set: { viewCount: viewDoc.viewCount } }, { upsert: true });
 
     // Return current view count
-    let viewDoc = await View.findOne();
+    viewDoc = await db.collection('views').findOne();
     res.status(200).json({ viewCount: viewDoc.viewCount });
   } catch (error) {
     console.error('Error updating/viewing view count:', error);
     res.status(500).send('Internal Server Error');
   }
+});
+
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
+
+// Middleware for handling 404 errors
+app.use((req, res, next) => {
+  res.status(404).send('Page not found');
 });
 
 // Start the server
